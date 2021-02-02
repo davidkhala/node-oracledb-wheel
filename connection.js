@@ -14,6 +14,10 @@ class ConnectionManager {
         }
     }
 
+    async ping() {
+        return this.connection.ping();
+    }
+
     async connect() {
         const connection = await oracledb.getConnection(this.config);
         this.logger.info('Connection was successful!');
@@ -28,15 +32,27 @@ class ConnectionManager {
     }
 
     /**
-     *
      * @param {string} SQL
      */
     async execute(SQL) {
         await this._connectIfNotExist();
-        const result = await this.connection.execute(SQL);
-        this.logger.info(result)
-        return result
+        if (SQL.includes(';')) {
+            const sentences = SQL.split(';')
+            const resultSet = []
+            for (const sentence of sentences) {
+                const trimmed = sentence.trim();
+                if (trimmed) {
+                    const result = await this.connection.execute(trimmed);
+                    resultSet.push(result)
+                }
+            }
+            return resultSet
+        } else {
+            const result = await this.connection.execute(SQL);
+            return [result]
+        }
     }
+
 }
 
 module.exports = ConnectionManager

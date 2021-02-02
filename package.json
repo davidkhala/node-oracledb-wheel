@@ -1,6 +1,6 @@
 {
   "name": "node-oracledb-wheel",
-  "version": "0.0.4-alpha",
+  "version": "0.0.4-rc1",
   "dependencies": {
     "oracledb": "latest"
   },
