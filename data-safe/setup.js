@@ -33,7 +33,20 @@ class DataSafeSetup {
         const SQL = `DROP USER c##${DATASAFE_ADMIN} CASCADE`
         await this.connectionManager.execute(SQL)
     }
+
 }
 
+/**
+ *
+ * @enum {string}
+ */
+DataSafeSetup.DataSafeFeatures = {
+    AUDIT_COLLECTION: 'AUDIT_COLLECTION',
+    AUDIT_SETTING: 'AUDIT_SETTING',
+    DATA_DISCOVERY: 'DATA_DISCOVERY',
+    MASKING: 'MASKING',
+    ASSESSMENT: 'ASSESSMENT',
+    ALL: 'ALL'
+}
 module.exports = DataSafeSetup
 
