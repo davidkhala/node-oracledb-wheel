@@ -1,4 +1,9 @@
 class ConnectStringBuilder {
+    /**
+     *
+     * @param {string} DBUniqueName
+     * @param {string} hostDomainName
+     */
     constructor(DBUniqueName, hostDomainName) {
         this.setDatabaseUniqueName(DBUniqueName)
         this.setHostDomainName(hostDomainName)
@@ -9,6 +14,9 @@ class ConnectStringBuilder {
         return this
     }
 
+    get serviceName() {
+        return `${this.DBUniqueName}.${this.hostDomainName}`
+    }
 
     setHostnamePrefix(hostPrefix) {
         this.hostPrefix = hostPrefix
@@ -32,7 +40,7 @@ class ConnectStringBuilder {
         } else {
             FQDN = `${this.hostPrefix}.${this.hostDomainName}`;
         }
-        return `${FQDN}:${this.port || 1521}/${this.DBUniqueName}.${this.hostDomainName}`
+        return `${FQDN}:${this.port || 1521}/${this.serviceName}`
     }
 
 

@@ -22,13 +22,15 @@ class DataSafeSetup {
             throw Error(`Do not use 'SYSTEM' or 'SYSAUX' as the default tablespace. You cannot mask data if you use these tableSpaces.`)
         }
 
-        const SQL = `CREATE USER C##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
-            GRANT CONNECT,RESOURCE TO C##${DATASAFE_ADMIN}`
-        await this.connectionManager.execute(SQL)
+        const SQL = `
+            CREATE USER c##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
+            GRANT CONNECT,RESOURCE TO c##${DATASAFE_ADMIN};
+            `
+        await this.connectionManager.executeMany(SQL)
     }
 
     async deleteServiceAccount(DATASAFE_ADMIN) {
-        const SQL = `DROP USER C##${DATASAFE_ADMIN} CASCADE`
+        const SQL = `DROP USER c##${DATASAFE_ADMIN} CASCADE`
         await this.connectionManager.execute(SQL)
     }
 }
