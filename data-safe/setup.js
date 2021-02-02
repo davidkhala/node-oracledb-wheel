@@ -26,7 +26,7 @@ class DataSafeSetup {
             CREATE USER c##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
             GRANT CONNECT,RESOURCE TO c##${DATASAFE_ADMIN};
             `
-        await this.connectionManager.executeMany(SQL)
+        await this.connectionManager.execute(SQL)
     }
 
     async deleteServiceAccount(DATASAFE_ADMIN) {

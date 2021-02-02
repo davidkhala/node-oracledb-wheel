@@ -27,9 +27,19 @@ class ConnectionManager {
         }
     }
 
+    /**
+     *
+     * @param {string} SQL
+     */
     async execute(SQL) {
         await this._connectIfNotExist();
-        const result = await this.connection.execute(SQL);
+        let result
+        if(SQL.includes(';')){
+            result = await this.connection.executeMany(SQL);
+        }else {
+            result = await this.connection.execute(SQL);
+        }
+
         this.logger.info(result)
         return result
     }
