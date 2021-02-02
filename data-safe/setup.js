@@ -11,6 +11,8 @@ class DataSafeSetup {
     }
 
     /**
+     * TODO  role 'ASSESSMENT' AUDIT_COLLECTION, AUDIT_SETTING, DATA_DISCOVERY, MASKING does not exist
+     * Common user is CDB user: https://docs.oracle.com/database/121/ADMQS/GUID-DA54EBE5-43EF-4B09-B8CC-FAABA335FBB8.htm
      * @param {string} DATASAFE_ADMIN
      * @param {string} password
      * @param {string} defaultTablespace
@@ -20,8 +22,13 @@ class DataSafeSetup {
             throw Error(`Do not use 'SYSTEM' or 'SYSAUX' as the default tablespace. You cannot mask data if you use these tableSpaces.`)
         }
 
-        const SQL = `CREATE USER ${DATASAFE_ADMIN} identified by ${password} DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
-            GRANT CONNECT,RESOURCE,ASSESSMENT,AUDIT_COLLECTION,DATA_DISCOVERY,MASKING,AUDIT_SETTING TO ${DATASAFE_ADMIN};`
+        const SQL = `CREATE USER C##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
+            GRANT CONNECT,RESOURCE TO C##${DATASAFE_ADMIN}`
+        await this.connectionManager.execute(SQL)
+    }
+
+    async deleteServiceAccount(DATASAFE_ADMIN) {
+        const SQL = `DROP USER C##${DATASAFE_ADMIN} CASCADE`
         await this.connectionManager.execute(SQL)
     }
 }
