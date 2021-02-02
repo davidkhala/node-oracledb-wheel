@@ -33,13 +33,7 @@ class ConnectionManager {
      */
     async execute(SQL) {
         await this._connectIfNotExist();
-        let result
-        if(SQL.includes(';')){
-            result = await this.connection.executeMany(SQL);
-        }else {
-            result = await this.connection.execute(SQL);
-        }
-
+        const result = await this.connection.execute(SQL);
         this.logger.info(result)
         return result
     }

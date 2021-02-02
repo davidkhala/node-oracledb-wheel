@@ -24,7 +24,7 @@ class DataSafeSetup {
 
         const SQL = `
             CREATE USER c##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
-            GRANT CONNECT,RESOURCE TO c##${DATASAFE_ADMIN};
+            GRANT CONNECT,RESOURCE TO c##${DATASAFE_ADMIN}
             `
         await this.connectionManager.execute(SQL)
     }
