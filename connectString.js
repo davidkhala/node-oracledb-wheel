@@ -6,19 +6,23 @@ class ConnectStringBuilder {
 
     setDatabaseUniqueName(DBUniqueName) {
         this.DBUniqueName = DBUniqueName
+        return this
     }
 
 
     setHostnamePrefix(hostPrefix) {
         this.hostPrefix = hostPrefix
+        return this
     }
 
     setHostDomainName(hostDomainName) {
         this.hostDomainName = hostDomainName
+        return this
     }
 
     setPublicIP(ip) {
         this.ip = ip
+        return this
     }
 
     build() {

@@ -3,5 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "oracledb": "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest"
   }
 }
