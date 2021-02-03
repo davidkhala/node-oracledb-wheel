@@ -8,10 +8,10 @@ class DataSafeSetup {
      */
     constructor(connectionManager) {
         this.connectionManager = connectionManager
+        this.logger = connectionManager.logger
     }
 
     /**
-     * TODO  role 'ASSESSMENT' AUDIT_COLLECTION, AUDIT_SETTING, DATA_DISCOVERY, MASKING does not exist
      * Common user is CDB user: https://docs.oracle.com/database/121/ADMQS/GUID-DA54EBE5-43EF-4B09-B8CC-FAABA335FBB8.htm
      * @param {string} DATASAFE_ADMIN
      * @param {string} password
@@ -22,15 +22,24 @@ class DataSafeSetup {
             throw Error(`Do not use 'SYSTEM' or 'SYSAUX' as the default tablespace. You cannot mask data if you use these tableSpaces.`)
         }
 
-        const SQL = `
-            CREATE USER c##${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP";
-            GRANT CONNECT,RESOURCE TO c##${DATASAFE_ADMIN}
-            `
-        await this.connectionManager.execute(SQL)
+        const row1 = `CREATE USER ${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP"`
+        let result1, result2
+        try {
+            result1 = await this.connectionManager.execute(row1)
+        } catch (err) {
+            if (err.errorNum === 65096) {
+                this.logger.error(`Mostly you should connect to Pluggable DB than Container DB. Please inspect 'connectString':${this.connectionManager.config.connectString}`)
+            }
+            throw err
+        }
+
+        const row2 = `GRANT CONNECT,RESOURCE TO ${DATASAFE_ADMIN}`
+        result2 = await this.connectionManager.execute(row2)
+        return [result1, result2]
     }
 
     async deleteServiceAccount(DATASAFE_ADMIN) {
-        const SQL = `DROP USER c##${DATASAFE_ADMIN} CASCADE`
+        const SQL = `DROP USER ${DATASAFE_ADMIN} CASCADE`
         await this.connectionManager.execute(SQL)
     }
 

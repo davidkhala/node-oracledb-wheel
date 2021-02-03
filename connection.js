@@ -32,7 +32,14 @@ class ConnectionManager {
     }
 
     /**
+     * @typedef {Error} ExecuteError
+     * @property {number} errorNum
+     * @property {number} offset
+     */
+
+    /**
      * @param {string} SQL
+     * @throws {ExecuteError}
      */
     async execute(SQL) {
         await this._connectIfNotExist();

@@ -9,6 +9,11 @@ class ConnectStringBuilder {
         this.setHostDomainName(hostDomainName)
     }
 
+    /**
+     *
+     * @param {string} DBUniqueName - Or PDB name, Or application service name
+     * @returns {ConnectStringBuilder}
+     */
     setDatabaseUniqueName(DBUniqueName) {
         this.DBUniqueName = DBUniqueName
         return this
