@@ -23,9 +23,8 @@ class DataSafeSetup {
         }
 
         const row1 = `CREATE USER ${DATASAFE_ADMIN} identified by "${password}" DEFAULT TABLESPACE "${defaultTablespace}" TEMPORARY TABLESPACE "TEMP"`
-        let result1, result2
         try {
-            result1 = await this.connectionManager.execute(row1)
+            await this.connectionManager.execute(row1)
         } catch (err) {
             if (err.errorNum === 65096) {
                 this.logger.error(`Mostly you should connect to Pluggable DB than Container DB. Please inspect 'connectString':${this.connectionManager.config.connectString}`)
@@ -34,8 +33,7 @@ class DataSafeSetup {
         }
 
         const row2 = `GRANT CONNECT,RESOURCE TO ${DATASAFE_ADMIN}`
-        result2 = await this.connectionManager.execute(row2)
-        return [result1, result2]
+        await this.connectionManager.execute(row2)
     }
 
     async deleteServiceAccount(DATASAFE_ADMIN) {
