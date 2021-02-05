@@ -16,4 +16,4 @@
       Valid ocid format is ocid1.<resource type>.<realm>.<region>.<unique id> , 
       Specify ocid of DB system(e.g. ocid1.dbsystem.oc1.iad.abc) or autonomous Database(e.g. ocid1.autonomousdatabase.oc1.iad.abc)`
 ## Type: Oracle Database on Compute
-Build from [MarketPlace](https://cloud.oracle.com/marketplace/application/47726045/usageInformation)
+- [Guideline](https://github.com/davidkhala/Oracle-Database-install-guide/blob/LTS/ocidb.md)
