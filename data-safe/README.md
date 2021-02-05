@@ -15,5 +15,9 @@
       Unable to connect to the database    
       Valid ocid format is ocid1.<resource type>.<realm>.<region>.<unique id> , 
       Specify ocid of DB system(e.g. ocid1.dbsystem.oc1.iad.abc) or autonomous Database(e.g. ocid1.autonomousdatabase.oc1.iad.abc)`
+
 ## Type: Oracle Database on Compute
 - [Guideline](https://github.com/davidkhala/Oracle-Database-install-guide/blob/LTS/ocidb.md)
+
+## Type: Oracle On-Premises Database
+- option `connector-port`: Oracle Connection Manager listener port
